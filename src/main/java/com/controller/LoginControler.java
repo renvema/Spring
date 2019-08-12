@@ -76,8 +76,7 @@ public class LoginControler {
     }
 
     @PostConstruct
-    @GetMapping("/init")
-    public String initTesUsers() {
+    public String initTestUsers() {
         User test = new User("test@test.ua", "test", "admin");
         userService.addUser(test);
         User admin = new User("admin@admin.ua", "admin", "admin");

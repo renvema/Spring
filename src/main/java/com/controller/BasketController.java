@@ -41,8 +41,8 @@ public class BasketController {
     }
 
     @GetMapping("/buy/{id}")
-    public String showBasketSize(@PathVariable("id") Long id,
-                                 @SessionAttribute("user") User user) {
+    public String addProductInBasket(@PathVariable("id") Long id,
+                                     @SessionAttribute("user") User user) {
         Product product = null;
         Optional<Product> optionalProduct = productService.getProductsById(id);
         if (optionalProduct.isPresent()) {
