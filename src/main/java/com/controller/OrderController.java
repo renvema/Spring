@@ -53,7 +53,6 @@ public class OrderController {
                 order.getAddress().isEmpty() || order.getPhone().isEmpty()) {
             model.addAttribute("error", "Empty fields!");
         } else {
-
             codeService.add(new Code(user));
             Code code = null;
             Optional<Code> optionalCode = codeService.getCodeForUser(user);
@@ -71,7 +70,7 @@ public class OrderController {
             orderService.add(order);
             mailService.sendConfirmCode(order);
         }
-        return "redirect:/user/payment/confirm";
+        return "redirect:/user/order/confirm";
     }
 
 
@@ -81,13 +80,13 @@ public class OrderController {
     }
 
     @PostMapping("/confirm")
-    public String confirmOrder(@RequestParam("confirm") String confirm,
+    public String confirmOrder(@RequestParam("code") String code,
                                @SessionAttribute("user") User user,
                                Model model) {
         Optional<Order> optionalOrder = orderService.getOrder(user);
         if (optionalOrder.isPresent()) {
             Order order = optionalOrder.get();
-            if (order.getCode().getCode().equals(confirm)) {
+            if (order.getCode().getCode().equals(code)) {
                 Basket basket = new Basket(order.getUser());
                 basketService.addBasket(basket);
                 model.addAttribute("message", "Your buying is successful.");
@@ -95,6 +94,6 @@ public class OrderController {
                 model.addAttribute("message", "The code is wrong. Try again");
             }
         }
-        return "payment_confirm";
+        return "confirm";
     }
 }

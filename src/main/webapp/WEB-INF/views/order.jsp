@@ -17,19 +17,19 @@
     <h2> Order </h2>
     <form:form action="/user/order" method="post" modelAttribute="order">
         Surname:<br>
-        <form:input path="surname">
+        <form:input path="surname"/>
         <br>
         Name:<br>
-        <form:input path="name">
+        <form:input path="name"/>
         <br>
         City:<br>
-        <form:input path="city">
+        <form:input path="city"/>
         <br>
         Address:<br>
-        <form:input path="address">
+        <form:input path="address"/>
         <br>
         Phone:<br>
-        <<form:input path="phone">
+        <form:input path="phone" />
         <input type="submit" value="Confirm"/>
         <button><a href="/sign"> Log Out </a></button>
     </form:form>

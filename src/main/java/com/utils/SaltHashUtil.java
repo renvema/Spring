@@ -1,6 +1,7 @@
 package com.utils;
 
 
+import org.apache.log4j.Logger;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -10,6 +11,7 @@ import java.util.Random;
 
 public class SaltHashUtil {
 
+    private static final Logger logger = Logger.getLogger(SaltHashUtil.class);
 
     public static String getSHA512SecurePassword(String passwordToHash, String salt) {
 
@@ -24,7 +26,7 @@ public class SaltHashUtil {
             }
             generatePassword = builder.toString();
         } catch (NoSuchAlgorithmException e) {
-
+            logger.error("Can't find algorithm", e);
         }
         return generatePassword;
     }

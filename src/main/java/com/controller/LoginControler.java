@@ -10,15 +10,12 @@ import com.service.UserService;
 import com.utils.SaltHashUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import javax.annotation.PostConstruct;
 import java.util.Optional;
 
 @Controller
@@ -38,11 +35,6 @@ public class LoginControler {
         this.productService = productService;
     }
 
-    @ModelAttribute("user")
-    public User setUserToSession(User user) {
-        return user;
-    }
-
     @GetMapping("/")
     public String init() {
         return "redirect:/login";
@@ -53,14 +45,20 @@ public class LoginControler {
         return "index";
     }
 
+    @ModelAttribute("user")
+    public User getSessionUser() {
+        return new User();
+    }
+
     @PostMapping("/login")
-    public String login(@RequestParam("email") String email,
-                        @RequestParam("password") String password,
-                        @ModelAttribute("user") User user) {
-        Optional<User> optUser = userService.findUserByEmail(email);
-        String hashPassword = SaltHashUtil.getSHA512SecurePassword(password,
-                optUser.get().getSalt());
-        if (optUser.isPresent() && optUser.get().getPassword().equals(hashPassword)) {
+    public String login(@ModelAttribute("user") User user) {
+        Optional<User> optUser = userService.findUserByEmail(user.getEmail());
+        String hashPassword = "";
+        if (optUser.isPresent()) {
+            hashPassword = SaltHashUtil.getSHA512SecurePassword(user.getPassword(),
+                    optUser.get().getSalt());
+        }
+        if (optUser.get().getPassword().equals(hashPassword)) {
             User getUser = optUser.get();
             user.setId(getUser.getId());
             user.setPassword(getUser.getPassword());
@@ -77,6 +75,7 @@ public class LoginControler {
         }
     }
 
+    @PostConstruct
     @GetMapping("/init")
     public String initTesUsers() {
         User test = new User("test@test.ua", "test", "admin");

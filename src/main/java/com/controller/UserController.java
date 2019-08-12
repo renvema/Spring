@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -44,6 +43,7 @@ public class UserController {
     public ModelAndView addUserPage() {
         return new ModelAndView("add_user", "user", new User());
     }
+
     @PostMapping("/add")
     public ModelAndView addUser(@ModelAttribute("user") User user,
                                 @RequestParam("repeatPassword") String repeatPassword,
@@ -51,7 +51,7 @@ public class UserController {
         String email = user.getEmail();
         String password = user.getPassword();
         String role = user.getRole();
-        if (email.isEmpty() || password.isEmpty()|| role.isEmpty()) {
+        if (email.isEmpty() || password.isEmpty() || role.isEmpty()) {
             model.addAttribute("error", "Empty fields!");
         } else if (password.equals(repeatPassword)) {
             userService.addUser(user);
@@ -75,8 +75,7 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public String saveEditUser(@ModelAttribute("user") User user,
-                                ModelMap model) {
+    public String saveEditUser(@ModelAttribute("user") User user, ModelMap model) {
         String email = user.getEmail();
         String password = user.getPassword();
         String role = user.getRole();
@@ -89,6 +88,7 @@ public class UserController {
         }
         return "edit_user";
     }
+
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);

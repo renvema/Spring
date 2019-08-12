@@ -11,10 +11,10 @@
     <title>Confirm</title>
 </head>
 <body>
-<form action="/confirm" method="post">
+<form action="/user/order/confirm" method="post">
     <br>
     Code from Email:<br>
-    <input type="text" name="code" value=""> <br>
+    <input type="text" name="code"> <br>
     <input type="submit" value="Confirm">
 </form>
 ${message}

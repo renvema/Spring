@@ -1,6 +1,9 @@
 package com.service;
 
+import com.dao.BasketDaoImpl;
 import com.entity.Order;
+import com.utils.RandomHelper;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.mail.Authenticator;
@@ -16,6 +19,7 @@ import java.util.Properties;
 @Service
 public class MailServiceImpl implements MailService {
 
+    private static final Logger logger = Logger.getLogger(MailServiceImpl.class);
 
     @Override
     public void sendConfirmCode(Order order) {
@@ -46,10 +50,10 @@ public class MailServiceImpl implements MailService {
             );
             message.setSubject("Don't show your code anybody: ");
             message.setText(order.getCode().getCode());
-
             Transport.send(message);
-
+            logger.info(RandomHelper.getFourDigitCode() + " was send to" + order.getUser().getEmail());
         } catch (MessagingException e) {
+            logger.error("Mail can't send", e);
         }
     }
 }

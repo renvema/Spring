@@ -29,13 +29,13 @@
             <td>${element.description}</td>
             <td>${element.price}</td>
             <td>
-                <form method="post" action="/user/product//buy${element.id}">Buy</a>
-                </form>
+
+                <button><a href="/user/product/buy/${element.id}">Buy</a></button>
             </td>
         </tr>
         </c:forEach>
         <button><a href="/login"> Started page </a></button>
-        <button><a href="/basket"> Basket </a></button>
+        <button><a href="/user/order"> Basket </a></button>
         <h3>${message}</h3>
         <p>Counter product ${size} <br>
 </center>

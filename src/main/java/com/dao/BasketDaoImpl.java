@@ -1,8 +1,10 @@
 package com.dao;
 
+import com.controller.BasketController;
 import com.entity.Basket;
 import com.entity.Product;
 import com.entity.User;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,15 @@ import java.util.Optional;
 @Repository
 public class BasketDaoImpl implements BasketDao {
 
+    private static final Logger logger = Logger.getLogger(BasketDaoImpl.class);
+
     @Autowired
     private SessionFactory sessionFactory;
 
     @Override
     public void addBasket(Basket basket) {
         sessionFactory.getCurrentSession().save(basket);
+        logger.info("Basket " + basket + " added in db");
     }
 
     @Override
@@ -28,7 +33,7 @@ public class BasketDaoImpl implements BasketDao {
         Session session = sessionFactory.getCurrentSession();
         basket.getProducts().add(product);
         session.update(basket);
-
+        logger.info("Product " + product + " added in basket");
     }
 
     @Override

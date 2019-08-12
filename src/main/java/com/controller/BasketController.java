@@ -5,6 +5,7 @@ import com.entity.Product;
 import com.entity.User;
 import com.service.BasketService;
 import com.service.ProductService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,13 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/user/product")
-@SessionAttributes("user")
 public class BasketController {
 
     private BasketService basketService;
@@ -32,8 +31,8 @@ public class BasketController {
     }
 
     @GetMapping
-    public String byProduct (@SessionAttribute("user") User user,
-                                      Model model) {
+    public String byProduct(@SessionAttribute("user") User user,
+                            Model model) {
         Optional<Basket> optionalBasket = basketService.getBasketByUser(user);
         optionalBasket.ifPresent(basket ->
                 model.addAttribute("size", basketService.size(basket)));

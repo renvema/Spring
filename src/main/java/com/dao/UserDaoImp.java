@@ -1,6 +1,7 @@
 package com.dao;
 
 import com.entity.User;
+import com.utils.SaltHashUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,15 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public void addUser(User user) {
+        String saltPassword= SaltHashUtil.getSHA512SecurePassword(user.getPassword(),user.getSalt());
+        user.setPassword(saltPassword);
         sessionFactory.getCurrentSession().save(user);
     }
 
     @Override
     public void updateUser(User user) {
+        String saltPassword= SaltHashUtil.getSHA512SecurePassword(user.getPassword(),user.getSalt());
+        user.setPassword(saltPassword);
         sessionFactory.getCurrentSession().update(user);
     }
 
