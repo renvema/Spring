@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
@@ -16,14 +17,16 @@
 <center>
 
     ${error}
-    <form action="/add/user" method="post">
-        Email <input name="email" type="email" value="${email}"/> <br>
-        Password <input name="password" type="password"/> <br>
-        Repeat password <input name="repeatPassword" type="password"/> <br>
-        <input name="role" type="radio" value="admin"> admin
-        <input name="role" type="radio" value="user" checked>user
-        <button type="submit">Register</button>
-    </form>
+<%--@elvariable id="user" type=""--%>
+<form:form action="/admin/user/add"
+           method="post" modelAttribute="user">
+        Email <form:input path="email"/> <br>
+        Password <form:password  path="password"/> <br>
+        Repeat password <input type="password" name="repeatPassword"/> <br>
+        <form:radiobutton path="role" value="admin"/> admin <br>
+        <form:radiobutton path="role" value="user"/> user <br>
+        <input type="submit" value="Register"/>
+</form:form>
 
 </center>
 

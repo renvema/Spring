@@ -1,6 +1,7 @@
-<%@ page import="model.Product" %>
+
 <%@ page import="java.util.List" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Maryana
@@ -18,12 +19,14 @@
 <center>
     ${valid}
     <h4>Edit product data</h4>
-    <form action="/admin/edit/product?id=${productId}" method="post">
-        Title <input name="title" type="text" value="${oldTitle}"/> <br>
-        Description <input name="description" type="text" value="${oldDescription}"/> <br>
-        Price <input name="price" type="number" step="0.01" value="${oldPrice}"/> <br>
-        <input type="submit" value="Save">
-    </form>
+        <form:form action="/admin/product/edit"
+                   method="post" modelAttribute="product">
+            <form:hidden path="id"/>
+            Email <form:input path="title"/> <br>
+            Description <form:input  path="description"/><br>
+            Price <form:input  path="price" type="number" step="0.01"/><br>
+            <input type="submit" value="Save">
+        </form:form>
 
 </center>
 </body>

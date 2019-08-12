@@ -43,44 +43,42 @@ public class LoginControler {
         return user;
     }
 
-//    @GetMapping("/")
-//    public String init() {
-//        return "redirect:/login";
-//    }
-//
-//    @GetMapping("/login")
-//    public String index() {
-//        return "index";
-//    }
-//
-//    @PostMapping("/login")
-//    public String login(@RequestParam("email") String email,
-//                        @RequestParam("password") String password,
-//                        @ModelAttribute("user") User user,
-//                        Model model) {
-//
-//        Optional<User> optUser = userService.findUserByEmail(email);
-//        String hashPassword = SaltHashUtil.getSHA512SecurePassword(password,
-//                optUser.get().getSalt());
-//        if (optUser.isPresent() && optUser.get().getPassword().equals(hashPassword)) {
-//            User getUser = optUser.get();
-//            user.setId(getUser.getId());
-//            user.setPassword(getUser.getPassword());
-//            user.setEmail(getUser.getEmail());
-//            user.setRole(getUser.getRole());
-//            user.setSalt(getUser.getSalt());
-//            if ("admin".equals(user.getRole())) {
-//                return "redirect:/users";
-//            } else {
-//                return "redirect:/init";
-//            }
-//        } else {
-//            return "index";
-//        }
-//    }
+    @GetMapping("/")
+    public String init() {
+        return "redirect:/login";
+    }
 
-    @RequestMapping(path = {"/init"}, method = RequestMethod.GET)
-    public String initTesUsers(Model model) {
+    @GetMapping("/login")
+    public String index() {
+        return "index";
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestParam("email") String email,
+                        @RequestParam("password") String password,
+                        @ModelAttribute("user") User user) {
+        Optional<User> optUser = userService.findUserByEmail(email);
+        String hashPassword = SaltHashUtil.getSHA512SecurePassword(password,
+                optUser.get().getSalt());
+        if (optUser.isPresent() && optUser.get().getPassword().equals(hashPassword)) {
+            User getUser = optUser.get();
+            user.setId(getUser.getId());
+            user.setPassword(getUser.getPassword());
+            user.setEmail(getUser.getEmail());
+            user.setRole(getUser.getRole());
+            user.setSalt(getUser.getSalt());
+            if ("admin".equals(user.getRole())) {
+                return "redirect:/admin/user";
+            } else {
+                return "redirect:/user/product";
+            }
+        } else {
+            return "index";
+        }
+    }
+
+    @GetMapping("/init")
+    public String initTesUsers() {
         User test = new User("test@test.ua", "test", "admin");
         userService.addUser(test);
         User admin = new User("admin@admin.ua", "admin", "admin");
@@ -95,5 +93,4 @@ public class LoginControler {
         productService.addProduct(cheese);
         return "index";
     }
-
 }

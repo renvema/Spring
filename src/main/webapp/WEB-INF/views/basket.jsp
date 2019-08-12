@@ -31,7 +31,7 @@
         </tr>
         </c:forEach>
         <button><a href="/login"> Started page </a></button>
-        <button><a href="/order"> Order </a></button>
+        <button><a href="/user/order"> Order </a></button>
 </center>
 </body>
 </html>

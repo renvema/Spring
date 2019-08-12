@@ -1,6 +1,6 @@
 <%@ page import="java.io.PrintWriter" %>
-<%@ page import="model.Product" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: Maryana
@@ -17,7 +17,7 @@
 <center>
     <h2> All products </h2>
 
-    <button><a href="/add/product"> Add product </a></button>
+    <button><a href="/admin/product/add"> Add product </a></button>
     <table border=1 bgcolor="#dda0dd">
         <tr>
             <th>Title</th>
@@ -32,10 +32,10 @@
             <td>${element.description}</td>
             <td>${element.price}</td>
             <td>
-                <button><a href="/admin/edit/product?id=${element.id}">Edit</a></button>
+                <button><a href="/admin/product/edit/${element.id}">Edit</a></button>
             </td>
             <td>
-                <button><a href="/admin/delete/product?id=${element.id}">Delete</a></button>
+                <button><a href="/admin/product/delete/${element.id}">Delete</a></button>
             </td>
         </tr>
         </c:forEach>

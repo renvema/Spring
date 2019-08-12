@@ -28,17 +28,22 @@ public class User {
     private String role;
 
     @Column(name = "salt")
-    private String salt;
+    private String salt = SaltHashUtil.getRandomeSalt();
 
     public User() {
     }
 
     public User(String email, String password, String role) {
-        this.salt = SaltHashUtil.getRandomeSalt();
         this.email = email;
         this.password = password;
         this.role = role;
     }
+//    public User(String email, String password, String role) {
+//        this.salt = SaltHashUtil.getRandomeSalt();
+//        this.email = email;
+//        this.password = password;
+//        this.role = role;
+//    }
 
     public Long getId() {
         return id;

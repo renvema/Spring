@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>Your order</title>
@@ -14,25 +15,24 @@
 <body>
 <center>
     <h2> Order </h2>
-    <form action="/order" method="post">
+    <form:form action="/user/order" method="post" modelAttribute="order">
         Surname:<br>
-        <input type="text" name="surname" value="">
+        <form:input path="surname">
         <br>
         Name:<br>
-        <input type="text" name="name" value="">
+        <form:input path="name">
         <br>
         City:<br>
-        <input type="text" name="city" value="">
+        <form:input path="city">
         <br>
         Address:<br>
-        <input type="text" name="address" value="">
+        <form:input path="address">
         <br>
         Phone:<br>
-        <input type="number" name="phone" value="">
-        <button type="submit"> Confirm</button>
+        <<form:input path="phone">
+        <input type="submit" value="Confirm"/>
         <button><a href="/sign"> Log Out </a></button>
-    </form>
+    </form:form>
 </center>
 </body>
 </html>
-

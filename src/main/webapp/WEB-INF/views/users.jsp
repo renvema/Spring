@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Maryana
@@ -16,24 +17,24 @@
 <center>
     <h2> All users </h2>
 
-    <button><a href="/add/user"> Add user </a></button>
-    <button><a href="/products">Products</a></button>
+    <button><a href="/admin/user/add"> Add user </a></button>
+    <button><a href="/admin/product">Products</a></button>
     <button><a href="/login"> Started page </a></button>
     <table border=1 bgcolor="#dda0dd">
         <tr>
             <th>Email</th>
             <th>Password</th>
         </tr>
-        <c:forEach var="element" items="${users}">
+        <c:forEach var="element" items="${allUsers}">
             <tr>
                 <td>${element.email}</td>
                 <td>${element.password}</td>
                 <td>${element.role}</td>
                 <td>
-                    <button><a href="/admin/edit/user?id=${element.id}">Edit</a></button>
+                    <button><a href="/admin/user/edit/${element.id}">Edit</a></button>
                 </td>
                 <td>
-                    <button><a href="/admin/delete/user?id=${element.id}">Delete</a></button>
+                    <button><a href="/admin/user/delete/${element.id}">Delete</a></button>
                 </td>
             </tr>
         </c:forEach>

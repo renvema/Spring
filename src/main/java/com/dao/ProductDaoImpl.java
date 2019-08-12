@@ -36,8 +36,12 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public void deleteProduct(Product product) {
-        sessionFactory.getCurrentSession().delete(product);
+    public void deleteProduct(Long id) {
+        Session session = sessionFactory.getCurrentSession();
+        Product product = session.get(Product.class, id);
+        if (product != null) {
+            session.delete(product);
+        }
     }
 
     @Override

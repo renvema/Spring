@@ -35,8 +35,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional
     @Override
-    public void deleteProduct(Product product) {
-        productDao.deleteProduct(product);
+    public void deleteProduct(Long id) {
+        productDao.deleteProduct(id);
     }
 
     @Transactional

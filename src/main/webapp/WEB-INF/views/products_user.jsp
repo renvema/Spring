@@ -29,8 +29,7 @@
             <td>${element.description}</td>
             <td>${element.price}</td>
             <td>
-                <form method="post" action="/buy/product?id=${element.id}">
-                    <input type="submit" value="Buy">
+                <form method="post" action="/user/product//buy${element.id}">Buy</a>
                 </form>
             </td>
         </tr>

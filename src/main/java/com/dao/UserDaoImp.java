@@ -28,8 +28,12 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public void deleteUser(User user) {
-        sessionFactory.getCurrentSession().delete(user);
+    public void deleteUser(Long id) {
+        Session session = sessionFactory.getCurrentSession();
+        User user = session.get(User.class, id);
+        if (user != null) {
+            session.delete(user);
+        }
     }
 
     @Override

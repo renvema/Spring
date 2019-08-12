@@ -13,7 +13,7 @@ public interface ProductDao {
 
     Optional<Product> getProductById(Long productId);
 
-    void deleteProduct(Product product);
+    void deleteProduct(Long id);
 
     public void update(Product product);
 }

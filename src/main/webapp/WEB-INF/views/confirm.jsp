@@ -15,7 +15,7 @@
     <br>
     Code from Email:<br>
     <input type="text" name="code" value=""> <br>
-    <button type="submit"> Confirm </button>
+    <input type="submit" value="Confirm">
 </form>
 ${message}
 </body>
