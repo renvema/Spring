@@ -88,7 +88,7 @@ public class LoginControler {
         basketService.addBasket(basket);
         Product bread = new Product("bread", "white bread with garlic", 12.50);
         productService.addProduct(bread);
-        Product cheese = new Product("cheese", "parmesan", 85.90);
+        Product cheese = new Product("cheese", "parmesan", 85.80);
         productService.addProduct(cheese);
         return "index";
     }
