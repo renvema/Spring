@@ -5,6 +5,7 @@ import com.utils.SaltHashUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
@@ -17,17 +18,18 @@ public class UserDaoImp implements UserDao {
 
     @Autowired
     private SessionFactory sessionFactory;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public void addUser(User user) {
-        String saltPassword = SaltHashUtil.getSHA512SecurePassword(user.getPassword(), user.getSalt());
+        String saltPassword = bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(saltPassword);
         sessionFactory.getCurrentSession().save(user);
     }
 
     @Override
     public void updateUser(User user) {
-        String saltPassword = SaltHashUtil.getSHA512SecurePassword(user.getPassword(), user.getSalt());
+        String saltPassword = bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(saltPassword);
         sessionFactory.getCurrentSession().update(user);
     }
@@ -67,5 +69,4 @@ public class UserDaoImp implements UserDao {
             return Optional.of((User) list.get(0));
         }
     }
-
 }

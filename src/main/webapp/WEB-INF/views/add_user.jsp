@@ -23,8 +23,8 @@
         Email <form:input path="email"/> <br>
         Password <form:password  path="password"/> <br>
         Repeat password <input type="password" name="repeatPassword"/> <br>
-        <form:radiobutton path="role" value="admin"/> admin <br>
-        <form:radiobutton path="role" value="user"/> user <br>
+        <form:radiobutton path="role" value="ROLE_ADMIN"/> admin <br>
+        <form:radiobutton path="role" value="ROLE_USER"/> user <br>
         <input type="submit" value="Register"/>
 </form:form>
 

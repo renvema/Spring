@@ -9,6 +9,7 @@ import com.service.CodeService;
 import com.service.MailService;
 import com.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -47,7 +48,7 @@ public class OrderController {
 
     @PostMapping
     public String createOrder(@ModelAttribute("order") Order order,
-                              @SessionAttribute("user") User user,
+                              @AuthenticationPrincipal User user,
                               ModelMap model) {
         if (order.getName().isEmpty() || order.getSurname().isEmpty() || order.getCity().isEmpty() ||
                 order.getAddress().isEmpty() || order.getPhone().isEmpty()) {
@@ -81,7 +82,7 @@ public class OrderController {
 
     @PostMapping("/confirm")
     public String confirmOrder(@RequestParam("code") String code,
-                               @SessionAttribute("user") User user,
+                               @AuthenticationPrincipal User user,
                                Model model) {
         Optional<Order> optionalOrder = orderService.getOrder(user);
         if (optionalOrder.isPresent()) {

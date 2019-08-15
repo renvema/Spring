@@ -7,6 +7,7 @@ import com.service.BasketService;
 import com.service.ProductService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,7 +43,7 @@ public class BasketController {
 
     @GetMapping("/buy/{id}")
     public String addProductInBasket(@PathVariable("id") Long id,
-                                     @SessionAttribute("user") User user) {
+                                     @AuthenticationPrincipal User user) {
         Product product = null;
         Optional<Product> optionalProduct = productService.getProductsById(id);
         if (optionalProduct.isPresent()) {
