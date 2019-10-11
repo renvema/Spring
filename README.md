@@ -7,14 +7,17 @@ For test admin's functional: Email - admin@admin.ua Password - admin
 For test user's functional: Email - user@user.ua Password - user
 ### Project Structure
     Java 8
-    SpringBoot 2.1.3 RELEASE
+    Spring 4.3.7.RELEASE
     Maven 3.5.1
     Log4j 1.2.17
     Mysql 8.0.16
+    JSTL 1.2.1
+    Hibernate 5.2.9 Final
+    TomCat
 
 ### To Run this project locally
 
-$ git clone hhttps://github.com/renvema/Spring.git
+$ git clone https://github.com/renvema/Spring.git
 
 $ cd Spring
 
