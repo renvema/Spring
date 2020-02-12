@@ -1,6 +1,7 @@
 package com.entity;
 
-import com.utils.SaltHashUtil;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,10 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Arrays;
+import java.util.Collection;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,9 +30,6 @@ public class User {
     @Column(name = "role")
     private String role;
 
-    @Column(name = "salt")
-    private String salt = SaltHashUtil.getRandomeSalt();
-
     public User() {
     }
 
@@ -38,12 +38,6 @@ public class User {
         this.password = password;
         this.role = role;
     }
-//    public User(String email, String password, String role) {
-//        this.salt = SaltHashUtil.getRandomeSalt();
-//        this.email = email;
-//        this.password = password;
-//        this.role = role;
-//    }
 
     public Long getId() {
         return id;
@@ -65,6 +59,36 @@ public class User {
         return password;
     }
 
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Arrays.asList((GrantedAuthority) this::getRole);
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -75,14 +99,6 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
     }
 
     @Override
@@ -96,8 +112,7 @@ public class User {
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (password != null ? !password.equals(user.password) : user.password != null)
             return false;
-        if (role != null ? !role.equals(user.role) : user.role != null) return false;
-        return salt != null ? salt.equals(user.salt) : user.salt == null;
+        return role != null ? role.equals(user.role) : user.role == null;
     }
 
     @Override
@@ -106,7 +121,6 @@ public class User {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
-        result = 31 * result + (salt != null ? salt.hashCode() : 0);
         return result;
     }
 
@@ -117,7 +131,6 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
-                ", salt='" + salt + '\'' +
                 '}';
     }
 }

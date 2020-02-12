@@ -23,8 +23,8 @@
             <form:hidden path="id"/>
             Email <form:input path="email"/> <br>
             Password <form:password path="password"/><br>
-            <form:radiobutton path="role" value="admin"/> admin
-            <form:radiobutton path="role" value="user"/>user
+            <form:radiobutton path="role" value="ROLE_ADMIN"/> admin
+            <form:radiobutton path="role" value="ROLE_USER"/>user
             <input type="submit" value="Save">
         </form:form>
 </center>

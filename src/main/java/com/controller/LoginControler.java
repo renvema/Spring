@@ -7,16 +7,13 @@ import com.entity.User;
 import com.service.BasketService;
 import com.service.ProductService;
 import com.service.UserService;
-import com.utils.SaltHashUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.annotation.PostConstruct;
-import java.util.Optional;
 
 @Controller
 @SessionAttributes("user")
@@ -36,52 +33,23 @@ public class LoginControler {
     }
 
     @GetMapping("/")
-    public String init() {
-        return "redirect:/login";
-    }
-
-    @GetMapping("/login")
-    public String index() {
-        return "index";
-    }
-
-    @ModelAttribute("user")
-    public User getSessionUser() {
-        return new User();
-    }
-
-    @PostMapping("/login")
-    public String login(@ModelAttribute("user") User user) {
-        Optional<User> optUser = userService.findUserByEmail(user.getEmail());
-        String hashPassword = "";
-        if (optUser.isPresent()) {
-            hashPassword = SaltHashUtil.getSHA512SecurePassword(user.getPassword(),
-                    optUser.get().getSalt());
-        }
-        if (optUser.get().getPassword().equals(hashPassword)) {
-            User getUser = optUser.get();
-            user.setId(getUser.getId());
-            user.setPassword(getUser.getPassword());
-            user.setEmail(getUser.getEmail());
-            user.setRole(getUser.getRole());
-            user.setSalt(getUser.getSalt());
-            if ("admin".equals(user.getRole())) {
-                return "redirect:/admin/user";
-            } else {
-                return "redirect:/user/product";
-            }
+    public String login(@AuthenticationPrincipal User user) {
+        if (user == null) {
+            return "redirect:/login";
+        } else if ("ROLE_ADMIN".equals(user.getRole())) {
+            return "redirect:/admin/user";
         } else {
-            return "index";
+            return "redirect:/user/product";
         }
     }
 
     @PostConstruct
     public String initTestUsers() {
-        User test = new User("test@test.ua", "test", "admin");
+        User test = new User("test@test.ua", "test", "ROLE_ADMIN");
         userService.addUser(test);
-        User admin = new User("admin@admin.ua", "admin", "admin");
+        User admin = new User("admin@admin.ua", "admin", "ROLE_ADMIN");
         userService.addUser(admin);
-        User user = new User("user@user.ua", "user", "user");
+        User user = new User("user@user.ua", "user", "ROLE_USER");
         userService.addUser(user);
         Basket basket = new Basket(user);
         basketService.addBasket(basket);
